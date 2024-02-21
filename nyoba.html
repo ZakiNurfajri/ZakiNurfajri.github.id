@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+<title>Stok Barang</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    
+    input[type="number"] {
+        width: 60px;
+    }
+    button {
+        padding: 5px 10px;
+        margin-left: 5px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    
+    .total_barang_masuk_1{
+
+        text-align: center;
+    }
+
+</style>
+</head>
+<body>
+
+<h1>Stok Barang</h1>
+
+<table class="table table-striped-row">
+    <thead>
+        <tr>
+            <th class="table-dark">Produk</th>
+            <th class="table-dark">Stok</th>
+            <th class="table-dark">Total Barang Masuk</th>
+            <th class="table-dark">Total Barang Keluar</th>
+            <th class="table-dark">Barang Masuk</th>
+            <th class="table-dark">Barang Keluar</th>
+            <th class="table-dark">Aksi</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Pepsodent</td>
+            <td><span id="stok_barang1">19</span></td>
+            <td><span id="total_barang_masuk_1">0</span></td>
+            <td><span id="total_barang_keluar_1">0</span></td>
+            <td><input type="number" id="barang_masuk_1" min="0"></td>
+            <td><input type="number" id="barang_keluar_1" min="0"></td>
+            <td><button onclick="ubahStok(1)">Simpan</button></td>
+
+        </tr>
+        <tr>
+            <td>Starbuck</td>
+            <td><span id="stok_barang2">15</span></td>
+            <td><span id="total_barang_masuk_2">0</span></td>
+            <td><span id="total_barang_keluar_2">0</span></td>
+            <td><input type="number" id="barang_masuk_2" min="0"></td>
+            <td><input type="number" id="barang_keluar_2" min="0"></td>
+            <td><button onclick="ubahStok(2)">Simpan</button></td>
+
+        </tr>
+        <tr>
+            <td>Pampers</td>
+            <td><span id="stok_barang3">20</span></td>
+            <td><span id="total_barang_masuk_3">0</span></td>
+            <td><span id="total_barang_keluar_3">0</span></td>
+            <td><input type="number" id="barang_masuk_3" min="0"></td>
+            <td><input type="number" id="barang_keluar_3" min="0"></td>
+            <td><button onclick="ubahStok(3)">Simpan</button></td>
+
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    // Objek untuk menyimpan total barang keluar untuk setiap barang
+    const totalBarangKeluar = {
+        1: 0,
+        2: 0,
+        3: 0
+    };
+
+    const totalBarangMasuk = {
+        1: 0,
+        2: 0,
+        3: 0  
+    };
+
+
+    function ubahStok(id) {
+        const stokSpan = document.getElementById(`stok_barang${id}`);
+        const barangMasukInput = document.getElementById(`barang_masuk_${id}`);
+        const barangKeluarInput = document.getElementById(`barang_keluar_${id}`);
+        const totalBarangKeluarSpan = document.getElementById(`total_barang_keluar_${id}`);
+        const totalBarangMasukSpan = document.getElementById(`total_barang_masuk_${id}`);
+
+        let stok = parseInt(stokSpan.textContent);
+        const masuk = parseInt(barangMasukInput.value) || 0; // Memeriksa dan mengonversi masukan menjadi bilangan bulat
+        const keluar = parseInt(barangKeluarInput.value) || 0; // Memeriksa dan mengonversi masukan menjadi bilangan bulat
+
+        // Mengubah stok berdasarkan barang masuk dan keluar
+        stok = stok + masuk - keluar;
+
+        // Memastikan stok tidak negatif
+        if (stok < 0) {
+            alert("Stok tidak bisa kurang dari 0.");
+            return;
+        }
+
+        // Memperbarui tampilan stok
+        stokSpan.textContent = stok;
+
+        // Mengupdate total barang keluar untuk barang ini
+        totalBarangKeluar[id] += keluar;
+        totalBarangKeluarSpan.textContent = totalBarangKeluar[id];
+        
+        // Mengupdate total barang masuk untuk barang ini
+        totalBarangMasuk[id] += masuk;
+        totalBarangMasukSpan.textContent = totalBarangMasuk[id];
+
+        // Reset input
+        barangMasukInput.value = "";
+        barangKeluarInput.value = "";
+    }
+</script>
+
+</body>
+</html> 
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stok Barang</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    input[type="number"] {
+        width: 60px;
+    }
+    button {
+        padding: 5px 10px;
+        margin-left: 5px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<h1>Stok Barang</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Produk</th>
+            <th>Stok</th>
+            <th>Barang Masuk</th>
+            <th>Barang Keluar</th>
+            <th>Aksi</th>
+            <th>Total Barang Keluar</th>
+            <th>Total Barang Masuk</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Pepsodent</td>
+            <td><span id="stok_barang1">10</span></td>
+            <td><input type="number" id="barang_masuk_1" min="0"></td>
+            <td><input type="number" id="barang_keluar_1" min="0"></td>
+            <td><button onclick="ubahStok(1)">Simpan</button></td>
+            <td><span id="total_barang_keluar_1">0</span></td>
+            <td><span id="total_barang_masuk_1">0</span></td>
+        </tr>
+        <tr>
+            <td>Starbuck</td>
+            <td><span id="stok_barang2">15</span></td>
+            <td><input type="number" id="barang_masuk_2" min="0"></td>
+            <td><input type="number" id="barang_keluar_2" min="0"></td>
+            <td><button onclick="ubahStok(2)">Simpan</button></td>
+            <td><span id="total_barang_keluar_2">0</span></td>
+            <td><span id="total_barang_masuk_2">0</span></td>
+        </tr>
+        <tr>
+            <td>Pampers</td>
+            <td><span id="stok_barang3">20</span></td>
+            <td><input type="number" id="barang_masuk_3" min="0"></td>
+            <td><input type="number" id="barang_keluar_3" min="0"></td>
+            <td><button onclick="ubahStok(3)">Simpan</button></td>
+            <td><span id="total_barang_keluar_3">0</span></td>
+            <td><span id="total_barang_masuk_3">0</span></td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    // Objek untuk menyimpan total barang keluar untuk setiap barang
+    const totalBarangKeluar = {
+        1: 0,
+        2: 0,
+        3: 0
+    };
+
+    const totalBarangMasuk = {
+        1: 0,
+        2: 0,
+        3: 0
+    };
+
+
+    function ubahStok(id) {
+        const stokSpan = document.getElementById(`stok_barang${id}`);
+        const barangMasukInput = document.getElementById(`barang_masuk_${id}`);
+        const barangKeluarInput = document.getElementById(`barang_keluar_${id}`);
+        const totalBarangKeluarSpan = document.getElementById(`total_barang_keluar_${id}`);
+        const totalBarangMasukSpan = document.getElementById(`total_barang_masuk_${id}`);
+
+        let stok = parseInt(stokSpan.textContent);
+        const masuk = parseInt(barangMasukInput.value) || 0; // Memeriksa dan mengonversi masukan menjadi bilangan bulat
+        const keluar = parseInt(barangKeluarInput.value) || 0; // Memeriksa dan mengonversi masukan menjadi bilangan bulat
+
+        // Mengubah stok berdasarkan barang masuk dan keluar
+        stok = stok + masuk - keluar;
+
+        // Memastikan stok tidak negatif
+        if (stok < 0) {
+            alert("Stok tidak bisa kurang dari 0.");
+            return;
+        }
+
+        // Memperbarui tampilan stok
+        stokSpan.textContent = stok;
+
+        // Mengupdate total barang keluar untuk barang ini
+        totalBarangKeluar[id] += keluar;
+        totalBarangKeluarSpan.textContent = totalBarangKeluar[id];
+        
+        // Mengupdate total barang masuk untuk barang ini
+        totalBarangMasuk[id] += masuk;
+        totalBarangMasukSpan.textContent = totalBarangMasuk[id];
+
+        // Reset input
+        barangMasukInput.value = "";
+        barangKeluarInput.value = "";
+    }
+</script>
+
+</body>
+</html> -->
